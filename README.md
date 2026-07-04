@@ -24,7 +24,7 @@ Sistema web PWA para gestión de mantenimientos automotrices.
 
 ## 🔗 Backend
 - URL local: `http://localhost:3000/api`
-- En Railway, define `API_UPSTREAM_URL` con la URL pública del backend, por ejemplo `https://tu-backend.up.railway.app`
+- En Railway, si tu backend usa otro dominio, define `API_UPSTREAM_URL`; si no, la imagen usa por defecto `https://automotive-maintenance-back-production.up.railway.app`
 - Opcionalmente también puedes definir `VITE_API_URL` si quieres que el bundle apunte directo al backend; si no, el frontend usará `/api` y Nginx lo proxyará
 - Credenciales demo: `admin@automotive.com / password123`
 

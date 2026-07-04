@@ -17,6 +17,7 @@ RUN npm run build
 FROM nginx:stable-alpine
 
 ENV PORT=80
+ENV API_UPSTREAM_URL=https://automotive-maintenance-back-production.up.railway.app
 
 # Copy built assets
 COPY --from=builder /app/dist /usr/share/nginx/html
