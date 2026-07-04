@@ -1,8 +1,41 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
+const configuredApiUrl = import.meta.env.VITE_API_URL;
+const normalizeApiUrl = (value) => {
+  if (!value) {
+    return '';
+  }
+
+  const trimmedValue = value.trim().replace(/\/+$/, '');
+
+  if (/^https?:\/\//i.test(trimmedValue)) {
+    return trimmedValue;
+  }
+
+  if (trimmedValue.startsWith('//')) {
+    return `https:${trimmedValue}`;
+  }
+
+  if (trimmedValue.startsWith('/')) {
+    return trimmedValue;
+  }
+
+  return `https://${trimmedValue}`;
+};
+
+const apiBaseURL = normalizeApiUrl(configuredApiUrl) || (import.meta.env.DEV ? 'http://localhost:3000/api' : '');
+
+if (!apiBaseURL) {
+  throw new Error('VITE_API_URL is required in production. Set it in Railway to your public backend URL.');
+}
+
+if (import.meta.env.PROD && !/^https?:\/\//i.test(apiBaseURL)) {
+  throw new Error('VITE_API_URL must be an absolute URL in production.');
+}
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: apiBaseURL,
   timeout: 10000
 });
 
