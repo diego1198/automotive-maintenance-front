@@ -24,7 +24,8 @@ const normalizeApiUrl = (value) => {
   return `https://${trimmedValue}`;
 };
 
-const apiBaseURL = normalizeApiUrl(configuredApiUrl) || (import.meta.env.DEV ? 'http://localhost:3000/api' : '/api');
+const defaultProductionApiUrl = 'https://automotive-maintenance-back-production.up.railway.app/api';
+const apiBaseURL = normalizeApiUrl(configuredApiUrl) || (import.meta.env.DEV ? 'http://localhost:3000/api' : defaultProductionApiUrl);
 
 const api = axios.create({
   baseURL: apiBaseURL,

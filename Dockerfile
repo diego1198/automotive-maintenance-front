@@ -8,16 +8,19 @@ RUN npm ci --silent || npm install --silent
 # Copy source and build
 COPY . .
 
-# Optional build-time API URL. Production can also rely on the runtime reverse proxy.
+# Log the build-time API variables so Railway config can be verified quickly.
 ARG VITE_API_URL
-ENV VITE_API_URL=${VITE_API_URL}
+ARG API_VITE_URL
 
-RUN npm run build
+RUN API_URL_TO_USE="${VITE_API_URL:-$API_VITE_URL}"; \
+	echo "VITE_API_URL=${VITE_API_URL:-<empty>}" && \
+	echo "API_VITE_URL=${API_VITE_URL:-<empty>}" && \
+	echo "Using API URL: ${API_URL_TO_USE:-<default production URL>}" && \
+	VITE_API_URL="$API_URL_TO_USE" npm run build
 
 FROM nginx:stable-alpine
 
 ENV PORT=80
-ENV API_UPSTREAM_URL=https://automotive-maintenance-back-production.up.railway.app
 
 # Copy built assets
 COPY --from=builder /app/dist /usr/share/nginx/html
