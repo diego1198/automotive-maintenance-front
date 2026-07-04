@@ -8,8 +8,8 @@ RUN npm ci --silent || npm install --silent
 # Copy source and build
 COPY . .
 
-# Allow passing API URL at build time (default points to host.docker.internal:3000 on macOS)
-ARG VITE_API_URL=http://host.docker.internal:3000
+# Allow passing API URL at build time. Defaults to a same-origin /api proxy for production.
+ARG VITE_API_URL=/api
 ENV VITE_API_URL=${VITE_API_URL}
 
 RUN npm run build
