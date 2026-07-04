@@ -24,8 +24,8 @@ Sistema web PWA para gestión de mantenimientos automotrices.
 
 ## 🔗 Backend
 - URL local: `http://localhost:3000/api`
-- En Railway, define `VITE_API_URL` con la URL pública absoluta de tu backend, por ejemplo `https://tu-backend.up.railway.app/api`
-- No uses `/api` como fallback en producción si el frontend no tiene un proxy reverso configurado
+- En Railway, define `API_UPSTREAM_URL` con la URL pública del backend, por ejemplo `https://tu-backend.up.railway.app`
+- Opcionalmente también puedes definir `VITE_API_URL` si quieres que el bundle apunte directo al backend; si no, el frontend usará `/api` y Nginx lo proxyará
 - Credenciales demo: `admin@automotive.com / password123`
 
 ## 📦 Instalación
@@ -39,7 +39,7 @@ npm run dev
 ```
 
 ## ⚙️ Variables de entorno
-Copia `.env.example` a `.env` para desarrollo local. En Railway o Docker de producción, pasa `VITE_API_URL` como variable de entorno o build arg antes de compilar.
+Copia `.env.example` a `.env` para desarrollo local. En Railway, configura `API_UPSTREAM_URL` en el servicio del frontend para que Nginx redirija `/api` al backend.
 
 ## 🖥️ Estructura
 - `src/api` - Configuración de axios y endpoints

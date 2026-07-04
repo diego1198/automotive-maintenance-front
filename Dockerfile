@@ -8,11 +8,9 @@ RUN npm ci --silent || npm install --silent
 # Copy source and build
 COPY . .
 
-# Allow passing the public API URL at build time.
+# Optional build-time API URL. Production can also rely on the runtime reverse proxy.
 ARG VITE_API_URL
 ENV VITE_API_URL=${VITE_API_URL}
-
-RUN test -n "$VITE_API_URL" || (echo "VITE_API_URL is required for production builds" && exit 1)
 
 RUN npm run build
 
