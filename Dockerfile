@@ -20,7 +20,7 @@ RUN API_URL_TO_USE="${VITE_API_URL:-$API_VITE_URL}"; \
 
 FROM nginx:stable-alpine
 
-ENV PORT=80
+ENV PORT=8080
 
 # Copy built assets
 COPY --from=builder /app/dist /usr/share/nginx/html
